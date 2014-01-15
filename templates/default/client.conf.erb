@@ -1,0 +1,33 @@
+client
+dev tun
+proto udp
+remote <%= @server %> 1194
+# Choose a random host from the remote
+# list for load-balancing.  Otherwise
+# try hosts in the order specified.
+;remote-random
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca <%= @key_dir %>/ca.crt
+cert <%= @key_dir %>/client.crt
+key <%= @key_dir %>/client.key
+# script in the easy-rsa folder will do this.
+ns-cert-type server
+
+# Select a cryptographic cipher.
+# If the cipher option is used on the server
+# then you must also specify it here.
+cipher <%= @cipher %>
+
+# Enable compression on the VPN link.
+# Don't enable this unless it is also
+# enabled in the server config file.
+comp-lzo
+
+# Set log file verbosity.
+verb 3
+
+# Silence repeating messages
+;mute 20

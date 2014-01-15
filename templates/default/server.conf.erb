@@ -1,0 +1,51 @@
+port 1194
+proto udp
+dev tun
+ca <%= @key_dir %>/ca.crt
+cert <%= @key_dir %>/server.crt
+key <%= @key_dir %>/server.key
+dh <%= @key_dir %>/dh1024.pem
+server <%= @network_prefix %> <%= @subnet_mask %>
+ifconfig-pool-persist ipp.txt
+#
+;push "redirect-gateway def1 bypass-dhcp"
+
+# DNS servers provided by opendns.com.
+;push "dhcp-option DNS 208.67.222.222"
+;push "dhcp-option DNS 208.67.220.220"
+#
+client-to-client
+keepalive 10 120
+# Select a cryptographic cipher.
+# This config item must be copied to
+# the client config file as well.
+cipher <%= @cipher %>
+;cipher BF-CBC        # Blowfish (default)
+;cipher AES-128-CBC   # AES
+;cipher DES-EDE3-CBC  # Triple-DES
+
+# Enable compression on the VPN link.
+# If you enable it here, you must also
+# enable it in the client config file.
+comp-lzo
+
+# The maximum number of concurrently connected
+# clients we want to allow.
+max-clients <%= @client_count %>
+persist-key
+persist-tun
+status <%= @log_dir %>/openvpn-status.log
+log         <%= @log_dir %>/openvpn.log
+# Set the appropriate level of log
+# file verbosity.
+#
+# 0 is silent, except for fatal errors
+# 4 is reasonable for general usage
+# 5 and 6 can help to debug connection problems
+# 9 is extremely verbose
+verb 3
+
+# Silence repeating messages.  At most 20
+# sequential messages of the same message
+# category will be output to the log.
+;mute 20
