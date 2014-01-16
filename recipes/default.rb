@@ -32,7 +32,7 @@ chef_gem "netaddr" do
   action :install
 end
 
-default node[:openvpn][:log_dir] do
+directory node[:openvpn][:log_dir] do
   owner "root"
   group "root"
   mode "0777"
