@@ -9,7 +9,7 @@ template "#{easy_rsa_dir}/vars" do
   owner "root"
   group "root"
   mode "0755"
-  variables => ({
+  variables({
                   :country => node[:openvpn][:cert][:country],
                   :province => node[:openvpn][:cert][:province],
                   :city => node[:openvpn][:cert][:city],
