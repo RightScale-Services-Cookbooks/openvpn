@@ -63,4 +63,9 @@ service "openvpn" do
   action :start
 end
 
+sys_firewall "1194" do
+  protocol "both"
+  action :update
+end
+
 rightscale_marker :end             
