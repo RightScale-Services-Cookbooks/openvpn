@@ -64,7 +64,7 @@ service "openvpn" do
 end
 
 sys_firewall "1194" do
-  protocol "both"
+  protocol "udp"
   action :update
 end
 
