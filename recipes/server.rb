@@ -53,7 +53,9 @@ template "/etc/openvpn/server.conf" do
              :log_dir => node[:openvpn][:log_dir],
              :cipher => node[:openvpn][:cipher],
              :network_prefix => node[:openvpn][:server][:network_prefix],
-             :subnet_mask => node[:openvpn][:server][:subnet_mask] )
+             :subnet_mask => node[:openvpn][:server][:subnet_mask],
+             :client_count => node[:openvpn][:client][:count]
+            )
   action :create
 end
 
