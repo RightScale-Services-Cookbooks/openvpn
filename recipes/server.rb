@@ -33,6 +33,13 @@ end
   end
 end
 
+directory "#{node[:openvpn][:key_dir]}" do
+  owner "root"
+  group "root"
+  mode 0777
+  action :create
+end
+
 bash "build keys" do
   cwd "#{easy_rsa_dir}"
   code <<-EOF
