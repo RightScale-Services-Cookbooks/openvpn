@@ -15,8 +15,12 @@ recipe "openvpn::default", "install openvpn base software, needed for both clien
 recipe "openvpn::lighttpd", "installs lighthttpd for serving certs"
 recipe "openvpn::server", "install openvpn server"
 
-attribute "openvpn/server" do
+attribute "openvpn/server",
   :display_name => "OpenVPN Server",
   :description => "OpenVPN Server",
   :recipes => [ "openvpn::client" ]
 
+attribute "openvpn/client/key_base_url",
+  :display_name => "OpenVPN Client Package Base URL",
+  :description => "OpenVPN Client Package Base URL",
+  :recipes => [ "openvpn::client" ]
