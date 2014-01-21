@@ -1,3 +1,4 @@
+rightscale_marker :begin
 require 'netaddr'
 subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[:openvpn][:server][:subnet_mask]}").netmask.split('/').last
 
@@ -42,3 +43,22 @@ bash "build keys" do
     ./build-dh
   EOF
 end
+
+template "/etc/openvpn/server.conf" do
+  source "server.conf.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  variables( :key_dir => node[:openvpn][:key_dir],
+             :log_dir => node[:openvpn][:log_dir],
+             :cipher => node[:openvpn][:cipher],
+             :network_prefix => node[:openvpn][:server][:network_prefix],
+             :subnet_mask => node[:openvpn][:server][:subnet_mask] )
+  action :create
+end
+
+service "openvpn" do
+  action :start
+end
+
+rightscale_marker :end             
