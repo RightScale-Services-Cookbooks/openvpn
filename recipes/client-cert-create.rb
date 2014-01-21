@@ -1,5 +1,8 @@
+log node[:openvpn][:client][:count].to_i
+log node[:openvpn][:client][:host_prefix]
+
 for i in 0..node[:openvpn][:client][:count].to_i 
-  name="#{[:openvpn][:client][:host_prefix]}-#{i+1}.#{node[:openvpn][:client][:domain]}"
+  name="#{node[:openvpn][:client][:host_prefix]}-#{i+1}.#{node[:openvpn][:client][:domain]}"
 
   bash "create client" do
     cwd "/etc/openvpn/easy-rsa"
