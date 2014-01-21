@@ -5,30 +5,15 @@ subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[
 easy_rsa_dir="/etc/openvpn/easy-rsa/"
 execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 
-remote_file "#{easy_rsa_dir}/keys/ca.crt" do
-  source "#{node[:openvpn][:client][:key_base_url]}/ca.crt"
+remote_file "#{easy_rsa_dir}/client.tar" do
+  source "#{node[:openvpn][:client][:key_base_url]}/#{node[:openvpn][:client][:host_prefix]}-#{node[:openvpn][:client][:host_number]}.#{node[:openvpn][:client][:domain]}.tar"
   owner "root"
   group "root"
   mode "0644"
   action :create
 end
 
-remote_file "#{easy_rsa_dir}/keys/client.crt" do
-  source "#{node[:openvpn][:client][:key_base_url]}/#{node[:openvpn][:client][:host_prefix]}-#{node[:openvpn][:client][:host_number]}.#{node[:openvpn][:client][:domain]}.crt"
-  owner "root"
-  group "root"
-  mode "0644"
-  action :create
-end
-
-remote_file "#{easy_rsa_dir}/keys/client.key" do
-  source "#{node[:openvpn][:client][:key_base_url]}/#{node[:openvpn][:client][:host_prefix]}-#{node[:openvpn][:client][:host_number]}.#{node[:openvpn][:client][:domain]}.key"
-  owner "root"
-  group "root"
-  mode "0644"
-  action :create
-end
-
+execute "tar -xf #{easy_rsa_dir}/client.tar -C #{easy_rsa_dir}"
 
 template "/etc/openvpn/client.conf" do
   source "client.conf.erb"
@@ -40,7 +25,8 @@ template "/etc/openvpn/client.conf" do
              :cipher => node[:openvpn][:cipher],
              :network_prefix => node[:openvpn][:server][:network_prefix],
              :subnet_mask => node[:openvpn][:server][:subnet_mask],
-             :client_count => node[:openvpn][:client][:count]
+             :client_count => node[:openvpn][:client][:count],
+             :server => node[:openvpn][:server]
             )
   action :create
 end

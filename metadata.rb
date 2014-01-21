@@ -14,3 +14,9 @@ recipe "openvpn::client", "installs client software, and downloads client certs"
 recipe "openvpn::default", "install openvpn base software, needed for both client and server"
 recipe "openvpn::lighttpd", "installs lighthttpd for serving certs"
 recipe "openvpn::server", "install openvpn server"
+
+attribute "openvpn/server" do
+  :display_name => "OpenVPN Server",
+  :description => "OpenVPN Server",
+  :recipes => [ "openvpn::client" ]
+
