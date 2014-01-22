@@ -75,4 +75,5 @@ sys_firewall "1194" do
   action :update
 end
 
-rightscale_marker :end             
+execute "iptables --table nat --append POSTROUTING -s #{node[:openvpn][:server][:network_prefix]}/#{subnet} --out-interface eth0 -j MASQUERADE"
+rightscale_marker :end
