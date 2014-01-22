@@ -66,10 +66,6 @@ template "/etc/openvpn/server.conf" do
   action :create
 end
 
-service "openvpn" do
-  action :start
-end
-
 sys_firewall "1194" do
   protocol "udp"
   action :update
@@ -85,12 +81,19 @@ right_link_tag "openvpn:region=#{node[:openvpn][:region]}" do
   action :publish
 end
 
+
 ohai "reload" do
-  action :reload
+  action :nothing
+  notifies :publish, "right_link_tag[openvpn:ip=#{node.network.interfaces.tun0.addresses.first.first}]"
 end
 
 right_link_tag "openvpn:ip=#{node.network.interfaces.tun0.addresses.first.first}" do
-  action :publish
+  action :nothing
+end
+
+service "openvpn" do
+  action :start
+  notifies :reload, "ohai[reload]"
 end
 
 rightscale_marker :end
