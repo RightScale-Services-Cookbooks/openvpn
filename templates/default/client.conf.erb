@@ -11,8 +11,8 @@ nobind
 persist-key
 persist-tun
 ca <%= @key_dir %>/ca.crt
-cert <%= @key_dir %>/client.crt
-key <%= @key_dir %>/client.key
+cert <%= @key_dir %>/<%= @hostname %>.crt
+key <%= @key_dir %>/<%= @hostname %>.key
 # script in the easy-rsa folder will do this.
 ns-cert-type server
 
