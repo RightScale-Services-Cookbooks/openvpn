@@ -76,4 +76,19 @@ sys_firewall "1194" do
 end
 
 execute "iptables --table nat --append POSTROUTING -s #{node[:openvpn][:server][:network_prefix]}/#{subnet} --out-interface eth0 -j MASQUERADE"
+
+right_link_tag "provides:openvpn=server" do
+  action :publish
+end
+
+right_link_tag "openvpn:region=#{node[:openvpn][:region]}" do
+  action :publish
+end
+
+ohai
+
+right_link_tag "openvpn:ip=#{node.network.interfaces.tun0.addresses.first.first}" do
+  action :publish
+end
+
 rightscale_marker :end
