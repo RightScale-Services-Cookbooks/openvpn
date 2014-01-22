@@ -40,6 +40,12 @@ attribute "openvpn/client/domain",
   :default => "example.com",
   :required => "optional"
 
+attribute "openvpn/region",
+  :display_name => "OpenVPN Region",
+  :description => "OpenVPN Region",
+  :required => "optional",
+  :default => "default"
+
 #openvpn server
 attribute "openvpn/server/network_prefix",
   :display_name => "OpenVPN Network Prefix",
