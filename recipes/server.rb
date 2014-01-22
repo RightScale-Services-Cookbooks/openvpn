@@ -85,7 +85,9 @@ right_link_tag "openvpn:region=#{node[:openvpn][:region]}" do
   action :publish
 end
 
-ohai
+ohai "reload" do
+  action :reload
+end
 
 right_link_tag "openvpn:ip=#{node.network.interfaces.tun0.addresses.first.first}" do
   action :publish
