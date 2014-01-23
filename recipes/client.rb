@@ -47,8 +47,9 @@ ruby_block "set-ip-tag" do
 
     system = Ohai::System.new
     system.all_plugins
-    node=JSON.parse(system.to_json)
-    Chef::ShellOut.new("/usr/bin/rs_tag --add openvpn::ip=#{node["network"]["interfaces"]["tun0"]["addresses"].first.first}").run_command
+    node1=JSON.parse(system.to_json)
+    puts node1
+    Chef::ShellOut.new("/usr/bin/rs_tag --add openvpn::ip=#{node1["network"]["interfaces"]["tun0"]["addresses"].first.first}").run_command
   end
 end
 
