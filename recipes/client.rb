@@ -39,4 +39,17 @@ sys_firewall "1194" do
   action :update
 end
 
+ruby_block "set-ip-tag" do
+  block do
+    require 'rubygems'
+    require 'json'
+    require 'ohai'
+
+    system = Ohai::System.new
+    system.all_plugins
+    node=JSON.parse(system.to_json)
+    Chef::ShellOut.new("/usr/bin/rs_tag --add openvpn::ip=#{node["network"]["interfaces"]["tun0"]["addresses"].first.first}").run_command
+  end
+end
+
 rightscale_marker :end             

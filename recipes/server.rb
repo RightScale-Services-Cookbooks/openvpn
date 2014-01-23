@@ -84,12 +84,11 @@ end
 
 ohai "reload" do
   action :nothing
-#  notifies :publish, "right_link_tag[openvpn:ip=#{node.network.interfaces.tun0.addresses.first.first}]"
 end
 
-#right_link_tag "openvpn:ip=#{node.network.interfaces.tun0.addresses.first.first}" do
-#  action :nothing
-#end
+right_link_tag "openvpn:network=#{node[:openvpn][:server][:network_prefix]}/#{subnet}" do
+  action :publish
+end
 
 service "openvpn" do
   action :start
