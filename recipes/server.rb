@@ -74,7 +74,7 @@ sys_firewall "1194" do
   action :update
 end
 
-#execute "iptables --table nat --append POSTROUTING -s #{node[:openvpn][:server][:network_prefix]}/#{subnet} --out-interface eth0 -j MASQUERADE"
+execute "iptables --table nat --append POSTROUTING -s #{node[:openvpn][:server][:network_prefix]}/#{subnet} --out-interface eth0 -j MASQUERADE"
 
 right_link_tag "provides:openvpn=server" do
   action :publish
