@@ -63,6 +63,7 @@ template "/etc/openvpn/server.conf" do
              :network_prefix => node[:openvpn][:server][:network_prefix],
              :subnet_mask => node[:openvpn][:server][:subnet_mask],
              :client_count => node[:openvpn][:client][:count],
+             :private_ip => node[:cloud][:private_ips][0],
              :routes => node[:openvpn][:routes]
             )
   action :create
