@@ -1,4 +1,5 @@
 rightscale_marker :begin
+
 require 'netaddr'
 subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[:openvpn][:server][:subnet_mask]}").netmask.split('/').last
 
@@ -61,7 +62,8 @@ template "/etc/openvpn/server.conf" do
              :cipher => node[:openvpn][:cipher],
              :network_prefix => node[:openvpn][:server][:network_prefix],
              :subnet_mask => node[:openvpn][:server][:subnet_mask],
-             :client_count => node[:openvpn][:client][:count]
+             :client_count => node[:openvpn][:client][:count],
+             :routes => node[:openvpn][:routes]
             )
   action :create
 end

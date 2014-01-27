@@ -46,6 +46,13 @@ attribute "openvpn/region",
   :required => "optional",
   :default => "default"
 
+attribute "openvpn/routes",
+  :display_name => "OpenVPN Routes",
+  :description => "OpenVPN Routes",
+  :required => "optional",
+  :type => "array",
+  :recipes => [ "openvpn::server" ]
+
 #openvpn server
 attribute "openvpn/server/network_prefix",
   :display_name => "OpenVPN Network Prefix",
