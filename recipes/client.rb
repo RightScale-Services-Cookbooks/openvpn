@@ -52,5 +52,7 @@ end
 #    Chef::ShellOut.new("/usr/bin/rs_tag --add openvpn::ip=#{node1["network"]["interfaces"]["tun0"]["addresses"].first.first}").run_command
 #  end
 #end
-
+right_link_tag "openvpn:client_number=#{node[:openvpn][:client][:host_number]}" do
+  action :publish
+end
 rightscale_marker :end             
