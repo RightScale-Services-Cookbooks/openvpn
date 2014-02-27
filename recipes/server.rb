@@ -3,6 +3,19 @@ rightscale_marker :begin
 require 'netaddr'
 subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[:openvpn][:server][:subnet_mask]}").netmask.split('/').last
 
+if (subnet)
+  template "/etc/iptables.d/iptables_vpn" do
+    source "iptables_vpn.erb"
+    owner  "root"
+    group  "root"
+    mode   "0644"
+    variables( :cidr => subnet )
+    action :create
+  end
+else
+  raise "*** subnet is undefined, aborting"
+end
+
 easy_rsa_dir="/etc/openvpn/easy-rsa/"
 execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 
@@ -12,15 +25,15 @@ template "#{easy_rsa_dir}/vars" do
   group "root"
   mode "0755"
   variables({
-                  :country => node[:openvpn][:cert][:country],
-                  :province => node[:openvpn][:cert][:province],
-                  :city => node[:openvpn][:cert][:city],
-                  :org => node[:openvpn][:cert][:org],
-                  :email => node[:openvpn][:cert][:email],
-                  :cn => node[:openvpn][:cert][:cn],
-                  :name => node[:openvpn][:cert][:name],
-                  :ou => node[:openvpn][:cert][:ou]
-                })
+    :country => node[:openvpn][:cert][:country],
+    :province => node[:openvpn][:cert][:province],
+    :city => node[:openvpn][:cert][:city],
+    :org => node[:openvpn][:cert][:org],
+    :email => node[:openvpn][:cert][:email],
+    :cn => node[:openvpn][:cert][:cn],
+    :name => node[:openvpn][:cert][:name],
+    :ou => node[:openvpn][:cert][:ou]
+  })
   action :create
 end
 
@@ -82,6 +95,27 @@ right_link_tag "openvpn:region=#{node[:openvpn][:region]}" do
   action :publish
 end
 
+bash "net.ipv4.ip_forward update" do
+  flags "-ex"
+  user "root"
+  cwd "/tmp"
+  code <<-EOH
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+    sed -i -r 's/.*net\.ipv4\.ip_forward.+/net.ipv4.ip_forward = 1/' /etc/sysctl.conf
+  EOH
+end
+
+# sys_firewall::default disables iptables when node[:sys_firewall][:enabled]==disabled
+bash "iptables-restore" do
+  flags "-ex"
+  user "root"
+  cwd "/tmp"
+  code <<-EOH
+    if [ -f "/etc/iptables.d/iptables_vpn" ]; then
+      iptables-restore < /etc/iptables.d/iptables_vpn
+    fi
+  EOH
+end
 
 ohai "reload" do
   action :nothing
@@ -92,7 +126,7 @@ right_link_tag "openvpn:network=#{node[:openvpn][:server][:network_prefix]}/#{su
 end
 
 service "openvpn" do
-  action :start
+  action [ :enable, :start ]
   notifies :reload, "ohai[reload]"
 end
 
