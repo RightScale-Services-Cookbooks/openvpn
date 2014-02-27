@@ -3,13 +3,15 @@ rightscale_marker :begin
 require 'netaddr'
 subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[:openvpn][:server][:subnet_mask]}").netmask.split('/').last
 
+log "*** Using subnet: #{subnet}"
+
 if (subnet)
   template "/etc/iptables.d/iptables_vpn" do
     source "iptables_vpn.erb"
     owner  "root"
     group  "root"
     mode   "0644"
-    variables( :cidr => subnet )
+    variables( :cidr => "#{node[:openvpn][:server][:network_prefix]}/#{subnet}" )
     action :create
   end
 else
@@ -24,7 +26,7 @@ template "#{easy_rsa_dir}/vars" do
   owner "root"
   group "root"
   mode "0755"
-  variables({
+  variables(
     :country => node[:openvpn][:cert][:country],
     :province => node[:openvpn][:cert][:province],
     :city => node[:openvpn][:cert][:city],
@@ -33,7 +35,7 @@ template "#{easy_rsa_dir}/vars" do
     :cn => node[:openvpn][:cert][:cn],
     :name => node[:openvpn][:cert][:name],
     :ou => node[:openvpn][:cert][:ou]
-  })
+  )
   action :create
 end
 
@@ -70,15 +72,16 @@ template "/etc/openvpn/server.conf" do
   owner "root"
   group "root"
   mode "0644"
-  variables( :key_dir => node[:openvpn][:key_dir],
-             :log_dir => node[:openvpn][:log_dir],
-             :cipher => node[:openvpn][:cipher],
-             :network_prefix => node[:openvpn][:server][:network_prefix],
-             :subnet_mask => node[:openvpn][:server][:subnet_mask],
-             :client_count => node[:openvpn][:client][:count],
-             :private_ip => node[:cloud][:private_ips][0],
-             :routes => node[:openvpn][:routes]
-            )
+  variables(
+    :key_dir => node[:openvpn][:key_dir],
+    :log_dir => node[:openvpn][:log_dir],
+    :cipher => node[:openvpn][:cipher],
+    :network_prefix => node[:openvpn][:server][:network_prefix],
+    :subnet_mask => node[:openvpn][:server][:subnet_mask],
+    :client_count => node[:openvpn][:client][:count],
+    :private_ip => node[:cloud][:private_ips][0],
+    :routes => node[:openvpn][:routes]
+  )
   action :create
 end
 
