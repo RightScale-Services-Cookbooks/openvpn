@@ -49,9 +49,8 @@ verb 3
 # sequential messages of the same message
 # category will be output to the log.
 ;mute 20
-#push "route <%= @private_ip %> 255.255.255.255"
 <% if not @routes.nil? %>
 <% @routes.each do |route| %>
-push "route <%= route.split('/').first %> <%= route.split('/').last %>"
+push "route <%= route %>"
 <% end %>
 <% end %>
