@@ -7,11 +7,20 @@ for i in node[:openvpn][:client][:count_start].to_i..node[:openvpn][:client][:co
   bash "create client" do
     cwd "/etc/openvpn/easy-rsa"
     code <<-EOF
+      echo "*** Sourcing /etc/openvpn/easy-rsa/vars" 
       source ./vars > /dev/null
       export KEY_CN=#{name}
       export EASY_RSA="${EASY_RSA:-.}"
+
+      echo "*** Running $EASY_RSA/pkitool"
       "$EASY_RSA/pkitool" --batch #{name}
-      tar -cf /var/www/lighttpd/secure/#{name}.tar keys/#{name}.crt keys/#{name}.key keys/ca.crt 
+
+      if [ -d /var/www/lighttpd/secure ] ; then
+        echo "*** Creating /var/www/lighttpd/secure/#{name}.tar" 
+        tar -cf /var/www/lighttpd/secure/#{name}.tar keys/#{name}.crt keys/#{name}.key keys/ca.crt
+      else
+        echo "*** /var/www/lighttpd/secure/ is missing, skipping the tarball creation"
+      fi
     EOF
   end
 end
