@@ -6,9 +6,8 @@ subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[
 log "*** Using subnet: #{subnet}"
 
 if (subnet)
-  #not placing in /etc/iptables.d/ as it conflicts with sys_firewalli
-  template "/etc/iptables_vpn" do
-    source "iptables_vpn.erb"
+  template "/etc/iptables.snat" do
+    source "iptables.snat.erb"
     owner  "root"
     group  "root"
     mode   "0644"
@@ -115,8 +114,8 @@ bash "iptables-restore" do
   user "root"
   cwd "/tmp"
   code <<-EOH
-    if [ -f "/etc/iptables_vpn" ]; then
-      iptables-restore < /etc/iptables_vpn
+    if [ -f "/etc/iptables.snat" ]; then
+      iptables-restore < /etc/iptables.snat
     fi
   EOH
 end
