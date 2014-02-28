@@ -27,6 +27,9 @@ for i in node[:openvpn][:client][:count_start].to_i..node[:openvpn][:client][:co
 end
 
 log "*** Reloading the openvpn service to pick up the new client keys"
-service "openvpn" do
-  action :reload
+#the the service resource fails for :reload action
+bash "reload openvpn" do
+  code <<-EOF
+    service openvpn reload
+  EOF
 end
