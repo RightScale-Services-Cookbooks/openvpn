@@ -2,7 +2,7 @@ if ("#{node[:openvpn][:client][:names]}" == "")
   raise "*** Input openvpn/client/names is undefined, aborting"
 end
 
-node[:openvpn][:client][:names].split(/\s*,\s*/) each do |i|
+node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
   name="#{node[:openvpn][:client][:host_prefix]}-#{i}.#{node[:openvpn][:client][:domain]}"
 
   log "*** Creating client cert /etc/openvpn/easy-rsa/keys/#{name}.*"
