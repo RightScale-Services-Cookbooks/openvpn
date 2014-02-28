@@ -9,11 +9,12 @@ version          '1.1.0'
 depends "rightscale"
 depends "sys_firewall"
 
-recipe "openvpn::client-cert-create", "creates client certs"
-recipe "openvpn::client", "installs client software, and downloads client certs"
-recipe "openvpn::default", "install openvpn base software, needed for both client and server"
-recipe "openvpn::lighttpd", "installs lighthttpd for serving certs"
-recipe "openvpn::server", "install openvpn server"
+recipe "openvpn::create_numbered_clinet_certs", "Creates 'openvpn/client/count' numbered client certs starting from 'openvpn/client/start_host_number'"
+recipe "openvpn::create_named_clinet_certs", "Creates named client certs"
+recipe "openvpn::client", "Installs client software, and downloads client certs"
+recipe "openvpn::default", "Install openvpn base software, needed for both client and server"
+recipe "openvpn::lighttpd", "Installs lighthttpd for serving certs"
+recipe "openvpn::server", "Install openvpn server"
 
 #openvpn default
 attribute "openvpn/client/host_prefix",
@@ -33,6 +34,13 @@ attribute "openvpn/client/count",
   :description => "Number of OpenVPN Client Certs to Create",
   :default => "20",
   :required => "optional"
+  
+attribute "openvpn/client/names",
+  :display_name => "OpenVPN Client Name(s)",
+  :description => "One or a comma-separated list of client names to create openvpn certs for. Ex: john_doe,jane_doe",
+  :default => "client",
+  :required => "optional",
+  :recipes => [ "openvpn::create_named_clinet_certs" ]
   
 attribute "openvpn/client/domain",
   :display_name => "OpenVPN Client Domain",
