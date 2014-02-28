@@ -22,21 +22,21 @@ attribute "openvpn/client/host_prefix",
   :description => "OpenVPN Client Certificate Host Prefix",
   :default => 'client', 
   :required => "optional",
-  :recipes => [ "openvpn::create_named_clinet_certs", "create_numbered_clinet_certs" ]
+  :recipes => [ "openvpn::create_named_clinet_certs", "openvpn::create_numbered_clinet_certs" ]
 
 attribute "openvpn/client/count_start",
   :display_name => "OpenVPN Client First Host Number",
   :description => "OpenVPN Client First Host Number",
   :default => "1", 
   :required => "optional",
-  :recipes => [ "create_numbered_clinet_certs" ]
+  :recipes => [ "openvpn::create_numbered_clinet_certs" ]
 
 attribute "openvpn/client/count",
   :display_name => "OpenVPN Client Count",
   :description => "Number of OpenVPN Client Certs to Create",
   :default => "20",
   :required => "optional",
-  :recipes => [ "create_numbered_clinet_certs" ]
+  :recipes => [ "openvpn::create_numbered_clinet_certs" ]
   
 attribute "openvpn/client/names",
   :display_name => "OpenVPN Client Name(s)",
@@ -50,7 +50,7 @@ attribute "openvpn/client/domain",
   :description => "OpenVPN Client Domain",
   :default => "example.com",
   :required => "optional",
-  :recipes => [ "openvpn::client", "openvpn::create_named_clinet_certs", "create_numbered_clinet_certs" ]
+  :recipes => [ "openvpn::client", "openvpn::create_named_clinet_certs", "openvpn::create_numbered_clinet_certs" ]
 
 attribute "openvpn/region",
   :display_name => "OpenVPN Region",
