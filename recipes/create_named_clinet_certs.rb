@@ -1,4 +1,4 @@
-if ("#{node[:openvpn][:client][:names]}" != "")
+if ("#{node[:openvpn][:client][:names]}" == "")
   raise "*** Input openvpn/client/names is undefined, aborting"
 end
 
