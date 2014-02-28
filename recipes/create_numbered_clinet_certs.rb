@@ -4,6 +4,7 @@ log node[:openvpn][:client][:host_prefix]
 for i in node[:openvpn][:client][:count_start].to_i..node[:openvpn][:client][:count].to_i 
   name="#{node[:openvpn][:client][:host_prefix]}-#{i+1}.#{node[:openvpn][:client][:domain]}"
 
+  log "*** Creating client cert /etc/openvpn/easy-rsa/keys/#{name}.*"
   bash "create client" do
     cwd "/etc/openvpn/easy-rsa"
     code <<-EOF
@@ -23,4 +24,9 @@ for i in node[:openvpn][:client][:count_start].to_i..node[:openvpn][:client][:co
       fi
     EOF
   end
+end
+
+log "*** Reloading the openvpn service to pick up the new client keys"
+service "openvpn" do
+  action :reload
 end
