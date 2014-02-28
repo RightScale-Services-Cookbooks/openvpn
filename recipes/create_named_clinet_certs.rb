@@ -29,6 +29,9 @@ node[:openvpn][:client][:names].each do |i|
 end
 
 log "*** Reloading the openvpn service to pick up the new client keys"
-service "openvpn" do
-  action :reload
+#the the service resource fails for :reload action. Doing it the proper way :)
+bash "reload openvpn" do
+  code <<-EOF
+    service openvpn reload
+  EOF
 end
