@@ -49,23 +49,29 @@ end
   end
 end
 
-directory "#{node[:openvpn][:key_dir]}" do
-  owner "root"
-  group "root"
-  mode 0777
-  action :create
+if ("#{node[:openvpn][:certificates_action]}" == "Generate")
+  log "*** Generating OpenVPN keys as attribute openvpn/certificates_action is set to 'Generate'"
+  directory "#{node[:openvpn][:key_dir]}" do
+    owner "root"
+    group "root"
+    mode 0777
+    action :create
+  end
+
+  bash "build keys" do
+    cwd "#{easy_rsa_dir}"
+    code <<-EOF
+      source ./vars
+      ./clean-all
+      ./build-ca 
+      ./build-key-server server
+      ./build-dh
+    EOF
+  end
+else
+  log "*** Not generating OpenVPN keys as attribute openvpn/certificates_action is not set to 'Generate'"
 end
 
-bash "build keys" do
-  cwd "#{easy_rsa_dir}"
-  code <<-EOF
-    source ./vars
-    ./clean-all
-    ./build-ca 
-    ./build-key-server server
-    ./build-dh
-  EOF
-end
 
 template "/etc/openvpn/server.conf" do
   source "server.conf.erb"
