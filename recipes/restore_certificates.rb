@@ -1,6 +1,8 @@
-raise "*** ROS gem missing, please add rightscale::install_tools recipes to runlist." unless File.exists?("/opt/rightscale/sandbox/bin/ros_util")
+rightscale_marker :begin
 
 log "*** In openvpn::restore_certificates"
+
+raise "*** ROS gem missing, please add rightscale::install_tools recipes to runlist." unless File.exists?("/opt/rightscale/sandbox/bin/ros_util")
 
 if ("#{node[:openvpn][:certificates_action]}" != "Restore")
   log "*** Skipping OpenVPN restore as attribute openvpn/certificates_action is not 'Restore'"
@@ -62,5 +64,6 @@ else
       rm -rf #{backupfilepath_without_extension}
     EOH
   end
-
 end 
+
+rightscale_marker :end
