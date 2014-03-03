@@ -2,7 +2,7 @@ rightscale_marker :begin
 
 raise "*** ROS gem missing, please add rightscale::install_tools recipes to runlist." unless File.exists?("/opt/rightscale/sandbox/bin/ros_util")
 
-log "*** In backup #{node[:openvpn][:backup][:lineage]}, #{node[:openvpn][:backup][:storage_account_provider]}, #{node[:openvpn][:backup][:storage_account_endpoint]}, #{node[:openvpn][:backup][:container]}"
+log "*** In backup"
 
 backupfilename = node[:openvpn][:backup][:lineage] + "-" + Time.now.strftime("%Y%m%d%H%M") + ".tar.gz"
 backupfilepath = "/tmp/#{backupfilename}"
