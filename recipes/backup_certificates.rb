@@ -32,7 +32,7 @@ environment_variables = {
 bash "Create keys tarball to #{backupfilepath} " do
   flags "-ex"
   code <<-EOH
-    tar -zcvf #{backupfilepath} #{default[:openvpn][:key_dir]}
+    tar -zcvf #{backupfilepath} #{node[:openvpn][:key_dir]}
   EOH
 end
 
