@@ -46,22 +46,14 @@ else
     environment environment_variables
   end
 
-
   bash "Restore keys tarball(#{backupfilepath_without_extension})" do
-  flags "-ex"
-  code <<-EOH
-    cd /
-    tar -xzf #{backupfilepath_without_extension}
-  EOH
-end
-  
-  
-  # Delete the local file.
-  ruby_block "Delete the local file" do
-    block do
-      require "fileutils"
-      FileUtils.rm_f #{backupfilepath_without_extension}
-    end
+    flags "-ex"
+    code <<-EOH
+      cd /
+      tar -xzf #{backupfilepath_without_extension}
+      echo "*** Removing #{backupfilepath_without_extension}"
+      rm -rf #{backupfilepath_without_extension}
+    EOH
   end
 
 end 
