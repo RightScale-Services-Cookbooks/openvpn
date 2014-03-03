@@ -1,8 +1,15 @@
 rightscale_marker :begin
 
+log "*** In openvpn::backup_certificates"
+
 raise "*** ROS gem missing, please add rightscale::install_tools recipes to runlist." unless File.exists?("/opt/rightscale/sandbox/bin/ros_util")
 
-log "*** In backup"
+if (("#{node[:openvpn][:backup][:storage_account_id]}" == "") ||
+    ("#{node[:openvpn][:backup][:storage_account_secret]}" == "") ||
+    ("#{node[:openvpn][:backup][:container]}" == "") ||
+    ("#{node[:openvpn][:backup][:lineage]}" == ""))
+  raise "*** Attributes openvpn/backup/storage_account_id, storage_account_secret, container and lineage are required, aborting"
+end
 
 backupfilename = node[:openvpn][:backup][:lineage] + "-" + Time.now.strftime("%Y%m%d%H%M") + ".tar.gz"
 backupfilepath = "/tmp/#{backupfilename}"
