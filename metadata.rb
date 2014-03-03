@@ -25,7 +25,7 @@ recipe "openvpn::restore_certificates", "Restores from ROS the latest backup cer
 recipe "openvpn::backup_schedule_enable", "Enables openvpn::backup_certificates to be run daily."
 recipe "openvpn::backup_schedule_disable", "Disables openvpn::backup_certificates from being run daily."
 
-#openvpn default
+# OpenVPN attributes
 attribute "openvpn/client/host_prefix",
   :display_name => "OpenVPN Client Host Prefix",
   :description => "OpenVPN Client Certificate Host Prefix",
@@ -117,8 +117,10 @@ attribute "openvpn/certificates_action",
     "OpenVPN requires server and client certificates in order to work." +
     " These can be generated or restored from a Remote Object Store(ROS)." +
     " Use the 'Generate' option when setting up the OpenVPN server. " + 
-	" To avoid having to update all the clients when the OpenVPN server is replaced," + 
-	" use the 'Restore' option to populate the keys folder from a backup.",
+    " To avoid having to update all the clients when the OpenVPN server is replaced," + 
+    " use the 'Restore' option to populate the keys folder from a backup." +
+    " For the certificates backup and restore recipes to work, the optional 'backup' " + 
+    " advanced inputs must be defined.",
   :required => "required",
   :choice => [ "Generate", "Restore" ],
   :recipes => [
