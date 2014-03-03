@@ -7,6 +7,13 @@ if ("#{node[:openvpn][:certificates_action]}" != "Restore")
   return
 end
 
+if (("#{node[:openvpn][:backup][:storage_account_id]}" == "") ||
+    ("#{node[:openvpn][:backup][:storage_account_secret]}" == "") ||
+    ("#{node[:openvpn][:backup][:container]}" == "") ||
+    ("#{node[:openvpn][:backup][:lineage]}" == ""))
+  raise "*** Attributes storage_account_id, storage_account_secret, container and lineage are required, aborting"
+end
+
 if File.directory?(node[:openvpn][:key_dir])
   log "*** Skipping OpenVPN certificates restore as this folder already exists: #{node[:openvpn][:key_dir]}"
 else
