@@ -13,7 +13,7 @@ if (("#{node[:openvpn][:backup][:storage_account_id]}" == "") ||
     ("#{node[:openvpn][:backup][:storage_account_secret]}" == "") ||
     ("#{node[:openvpn][:backup][:container]}" == "") ||
     ("#{node[:openvpn][:backup][:lineage]}" == ""))
-  raise "*** Attributes openvpn/backup/storage_account_id, storage_account_secret, container and lineage are required, aborting"
+  raise "*** Attributes openvpn/backup/storage_account_id, storage_account_secret, container and lineage are required by openvpn::restore_certificates. Aborting"
 end
 
 if File.directory?(node[:openvpn][:key_dir])
