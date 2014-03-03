@@ -39,19 +39,19 @@ else
     'STORAGE_ACCOUNT_SECRET' => node[:openvpn][:backup][:storage_account_secret]
   }.merge(options)
 
-  # Obtain the dumpfile from ROS
-  execute "Download dumpfile from Remote Object Store" do
+  # Obtain the backup file from ROS
+  execute "Download the backup file from Remote Object Store" do
     command command_to_execute
-    creates dumpfilepath_without_extension
+    creates backupfilepath_without_extension
     environment environment_variables
   end
 
 
-  bash "Restore keys tarball(#{dumpfilepath_without_extension})" do
+  bash "Restore keys tarball(#{backupfilepath_without_extension})" do
   flags "-ex"
   code <<-EOH
-	  cd /
-    tar -xzf #{dumpfilepath_without_extension}
+    cd /
+    tar -xzf #{backupfilepath_without_extension}
   EOH
 end
   
@@ -60,7 +60,7 @@ end
   ruby_block "Delete the local file" do
     block do
       require "fileutils"
-      FileUtils.rm_f node[:openvpn][:backup][:filepath]
+      FileUtils.rm_f #{backupfilepath_without_extension}
     end
   end
 
