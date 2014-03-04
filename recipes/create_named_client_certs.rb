@@ -3,7 +3,7 @@ if ("#{node[:openvpn][:client][:names]}" == "")
 end
 
 node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
-  name="#{node[:openvpn][:client][:host_prefix]}-#{i}"
+  name="named_client-#{i}"
 
   log "*** Creating client cert /etc/openvpn/easy-rsa/keys/#{name}.*"
   bash "create client" do
