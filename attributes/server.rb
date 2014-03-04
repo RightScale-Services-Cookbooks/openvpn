@@ -4,5 +4,6 @@ default[:openvpn][:client][:host_prefix] = 'client'
 default[:openvpn][:client][:start_host_number] = '1'
 default[:openvpn][:client][:count_start] = 0
 default[:openvpn][:client][:count] = 10
+default[:openvpn][:server][:max_clients] = 100
 default[:openvpn][:client][:domain] = "example.com"
 default[:openvpn][:lighttpd][:dir_listing] = "enable"
