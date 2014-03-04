@@ -7,6 +7,10 @@ key <%= @key_dir %>/server.key
 dh <%= @key_dir %>/dh1024.pem
 server <%= @network_prefix %> <%= @subnet_mask %>
 ifconfig-pool-persist ipp.txt
+
+# Add support for revoking OpenVPN certificates
+crl-verify /etc/openvpn/easy-rsa/keys/crl.pem
+
 #
 ;push "redirect-gateway def1 bypass-dhcp"
 
@@ -28,13 +32,6 @@ cipher <%= @cipher %>
 # If you enable it here, you must also
 # enable it in the client config file.
 comp-lzo
-
-# Add support for revoking OpenVPN certificates
-crl-verify /etc/openvpn/easy-rsa/keys/crl.pem
-
-# Improve security by using a non-root user
-user nobody
-group nobody
 
 # The maximum number of concurrently connected
 # clients we want to allow.
