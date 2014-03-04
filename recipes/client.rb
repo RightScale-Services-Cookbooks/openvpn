@@ -4,7 +4,7 @@ easy_rsa_dir="/etc/openvpn/easy-rsa/"
 execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 
 remote_file "#{easy_rsa_dir}/client.tar" do
-  source "#{node[:openvpn][:client][:key_base_url]}/#{node[:openvpn][:client][:host_prefix]}-#{node[:openvpn][:client][:host_number]}.#{node[:openvpn][:client][:domain]}.tar"
+  source "#{node[:openvpn][:client][:key_base_url]}/#{node[:openvpn][:client][:cert_name]}.tar"
   owner "root"
   group "root"
   mode "0644"
@@ -25,7 +25,7 @@ template "/etc/openvpn/client.conf" do
              :subnet_mask => node[:openvpn][:server][:subnet_mask],
              :client_count => node[:openvpn][:client][:count],
              :server => node[:openvpn][:server],
-             :hostname => "#{node[:openvpn][:client][:host_prefix]}-#{node[:openvpn][:client][:host_number]}.#{node[:openvpn][:client][:domain]}"
+             :hostname => "#{node[:openvpn][:client][:cert_name]}.#{node[:openvpn][:client][:domain]}"
             )
   action :create
 end
