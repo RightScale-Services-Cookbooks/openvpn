@@ -29,6 +29,13 @@ cipher <%= @cipher %>
 # enable it in the client config file.
 comp-lzo
 
+# Add support for revoking OpenVPN certificates
+crl-verify /etc/openvpn/easy-rsa/keys/crl.pem
+
+# Improve security by using a non-root user
+user nobody
+group nobody
+
 # The maximum number of concurrently connected
 # clients we want to allow.
 max-clients <%= @client_count %>
