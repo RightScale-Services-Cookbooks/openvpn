@@ -67,9 +67,16 @@ if ("#{node[:openvpn][:certificates_action]}" == "Generate")
       ./build-ca 
       ./build-key-server server
       ./build-dh
-      echo "*** Creating empty crl.pem to allow the openvpn service to start. This file is used for revoked clients"
-      echo '' > keys/crl.pem
     EOF
+  end
+  
+  log "*** Creating dummy crl.pem to allow the openvpn service to start. This file is used for revoked clients"
+  template "#{easy_rsa_dir}/keys/crl.pem" do
+    source "crl.pem.erb"
+    owner "root"
+    group "root"
+    mode "0644"
+    action :create
   end
 else
   log "*** Not generating OpenVPN keys as attribute openvpn/certificates_action is not set to 'Generate'"
