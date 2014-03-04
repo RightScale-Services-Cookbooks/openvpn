@@ -16,7 +16,7 @@ recipe "openvpn::client", "Installs OpenVPN client software, and downloads clien
 
 # Client cert recipes
 recipe "openvpn::create_numbered_client_certs", "Creates 'openvpn/client/count' numbered client certs starting from 'openvpn/client/count_start'"
-recipe "openvpn::create_named_client_certs", "Creates named client certs"
+recipe "openvpn::create_named_client_certs", "Creates named client certs in the easy-rsa/keys/ folder"
 recipe "openvpn::lighttpd", "Installs lighthttpd for serving certs"
 
 # Backup and Restore recipes
