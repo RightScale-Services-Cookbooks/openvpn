@@ -61,14 +61,14 @@ if ("#{node[:openvpn][:certificates_action]}" == "Generate")
   bash "build keys" do
     cwd "#{easy_rsa_dir}"
     code <<-EOF
-      echo "*** Creating empty crl.pem to allow the openvpn service to start. This file is used for revoked clients"
-      echo '' > keys/crl.pem
       echo "*** Generating the server keys"
       source ./vars
       ./clean-all
       ./build-ca 
       ./build-key-server server
       ./build-dh
+      echo "*** Creating empty crl.pem to allow the openvpn service to start. This file is used for revoked clients"
+      echo '' > keys/crl.pem
     EOF
   end
 else
