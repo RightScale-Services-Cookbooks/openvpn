@@ -65,7 +65,7 @@ if ("#{node[:openvpn][:certificates_action]}" == "Generate")
       source ./vars
       ./clean-all
       ./build-ca 
-      ./build-key-server server
+      #./build-key-server server
       ./build-dh
     EOF
   end
