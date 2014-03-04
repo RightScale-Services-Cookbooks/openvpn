@@ -2,7 +2,7 @@ log node[:openvpn][:client][:count].to_i
 log node[:openvpn][:client][:host_prefix]
 
 for i in node[:openvpn][:client][:count_start].to_i..node[:openvpn][:client][:count].to_i 
-  name="#{node[:openvpn][:client][:host_prefix]}-#{i+1}.#{node[:openvpn][:client][:domain]}"
+  name="client-#{i+1}"
 
   log "*** Creating client cert /etc/openvpn/easy-rsa/keys/#{name}.*"
   bash "create client" do
