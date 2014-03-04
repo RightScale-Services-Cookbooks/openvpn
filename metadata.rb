@@ -26,13 +26,6 @@ recipe "openvpn::backup_schedule_enable", "Enables openvpn::backup_certificates 
 recipe "openvpn::backup_schedule_disable", "Disables openvpn::backup_certificates from being run daily."
 
 # OpenVPN attributes
-attribute "openvpn/client/host_prefix",
-  :display_name => "OpenVPN Client Host Prefix",
-  :description => "OpenVPN Client Certificate Host Prefix",
-  :default => 'client', 
-  :required => "optional",
-  :recipes => [ "openvpn::create_named_client_certs", "openvpn::create_numbered_client_certs" ]
-
 attribute "openvpn/client/count_start",
   :display_name => "OpenVPN Client First Host Number",
   :description => "OpenVPN Client First Host Number",
@@ -54,12 +47,11 @@ attribute "openvpn/client/names",
   :required => "optional",
   :recipes => [ "openvpn::create_named_client_certs" ]
   
-attribute "openvpn/client/domain",
-  :display_name => "OpenVPN Client Domain",
-  :description => "OpenVPN Client Domain",
-  :default => "example.com",
-  :required => "optional",
-  :recipes => [ "openvpn::client", "openvpn::create_named_client_certs", "openvpn::create_numbered_client_certs" ]
+attribute "openvpn/client/cert_name",
+  :display_name => "OpenVPN Client Cert Name",
+  :description => "The OpenVPN Client Certificate name as it is found in the easy-rsa/keys folder. For example: named_client-john_doe",
+  :required => "required",
+  :recipes => [ "openvpn::client" ]
 
 #openvpn server
 attribute "openvpn/region",
@@ -71,21 +63,20 @@ attribute "openvpn/region",
 
 attribute "openvpn/routes",
   :display_name => "OpenVPN Routes",
-  :description => "OpenVPN Routes",
+  :description => "OpenVPN Routes to be pushed to the client config. Use a comma-separated list of IP NETMASK pairs. For example: 10.0.0.0 255.0.0.0,192.168.40.0 255.255.255.0",
   :required => "optional",
-  :type => "array",
   :recipes => [ "openvpn::server" ]
 
 attribute "openvpn/server/network_prefix",
   :display_name => "OpenVPN Network Prefix",
-  :description => "OpenVPN Network Prefix",
-  :default => '192.168.1.0',
+  :description => "OpenVPN IP Network Prefix. For example: 192.168.111.0",
+  :default => '192.168.111.0',
   :required => "optional",
   :recipes => [ "openvpn::server" ]
 
 attribute "openvpn/server/subnet_mask",
   :display_name => "OpenVPN Subnet Mask",
-  :description => "OpenVPN Subnet Mask",
+  :description => "OpenVPN Subnet Mask. For example: 255.255.255.0",
   :default =>  '255.255.255.0',
   :required => "optional",
   :recipes => [ "openvpn::server" ]
