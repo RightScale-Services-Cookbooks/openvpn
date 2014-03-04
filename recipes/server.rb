@@ -96,7 +96,7 @@ template "/etc/openvpn/server.conf" do
     :subnet_mask => node[:openvpn][:server][:subnet_mask],
     :client_count => node[:openvpn][:server][:max_clients],
     :private_ip => node[:cloud][:private_ips][0],
-    :routes => node[:openvpn][:routes]
+    :routes => node[:openvpn][:routes].split(/\s*,\s*/)
   )
   action :create
 end
