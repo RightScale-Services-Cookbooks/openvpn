@@ -13,6 +13,7 @@ node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
       source ./vars > /dev/null
       export KEY_CN=#{name}
       export EASY_RSA="${EASY_RSA:-.}"
+      export KEY_NAME="#{name}"
 
       echo "*** Running $EASY_RSA/pkitool"
       "$EASY_RSA/pkitool" --batch #{name}
