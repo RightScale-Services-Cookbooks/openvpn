@@ -54,6 +54,13 @@ attribute "openvpn/client/cert_name",
   :recipes => [ "openvpn::client" ]
 
 #openvpn server
+attribute "openvpn/server/max_clients",
+  :display_name => "OpenVPN Max Clients",
+  :description => "The maximum number of concurrently connected OpenVPN clients to allow. Example: 128",
+  :default => "128",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
 attribute "openvpn/region",
   :display_name => "OpenVPN Region",
   :description => "OpenVPN Region",
