@@ -16,12 +16,12 @@ recipe "openvpn::client", "Installs OpenVPN client software, and downloads clien
 
 # Client cert recipes
 recipe "openvpn::create_numbered_client_certs", "Creates 'openvpn/client/count' numbered client certs starting from 'openvpn/client/count_start'"
-recipe "openvpn::manage_named_client_certs", "Manage(create or revoke) certificates. Input 'openvpn/client/names' should contain all names to be allowed. To create a new certificate, add the name to the list in the input. To revoke a client certificate, remove the name from the list. Then, run the recipe to sync."
+recipe "openvpn::manage_named_client_certs", "Manage(create or revoke) certificates. Input 'openvpn/client/names' should contain all names to be allowed. To create a new certificate, add the name to the list in the input. To revoke a client, remove the name from the list. Then, run the recipe to sync."
 recipe "openvpn::lighttpd", "Installs lighthttpd for serving certs"
 
 # Backup and Restore recipes
-recipe "openvpn::backup_certificates", "Creates a tarball with the OpenVPN certificates located in easy-rsa/keys folder and uploads it to Remote Object Storage"
-recipe "openvpn::restore_certificates", "Restores from ROS the latest backup certificates tarball to the easy-rsa/keys OpenVPN folder"
+recipe "openvpn::backup_certificates", "Creates an OpenVPN certificates tarball and uploads it to Remote Object Storage"
+recipe "openvpn::restore_certificates", "Restores the latest backup certificates tarball from ROS to the easy-rsa/keys OpenVPN folder"
 recipe "openvpn::backup_schedule_enable", "Enables openvpn::backup_certificates to be run daily."
 recipe "openvpn::backup_schedule_disable", "Disables openvpn::backup_certificates from being run daily."
 
