@@ -1,6 +1,6 @@
 name             'openvpn'
 maintainer       'RightScale Inc'
-maintainer_email 'premium@rightscale.com'
+maintainer_email 'support@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures openvpn'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
@@ -84,6 +84,56 @@ attribute "openvpn/server/subnet_mask",
   :display_name => "OpenVPN Subnet Mask",
   :description => "OpenVPN Subnet Mask. For example: 255.255.255.0",
   :default =>  '255.255.255.0',
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+  
+#openvpn cert inputs  
+attribute "openvpn/cert/country",
+  :display_name => "OpenVPN Cert Country",
+  :description => "OpenVPN Country to use when generating the server and client certificates. Example: US",
+  :default =>  'US',
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/cert/province",
+  :display_name => "OpenVPN Cert Province",
+  :description => "OpenVPN Province to use when generating the server and client certificates. Example: CA",
+  :default =>  "CA",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/cert/city",
+  :display_name => "OpenVPN Cert City",
+  :description => "OpenVPN City to use when generating the server and client certificates. Example: San Francisco",
+  :default =>  "San Francisco",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/cert/org",
+  :display_name => "OpenVPN Cert Organization",
+  :description => "OpenVPN Organization to use when generating the server and client certificates. Example: Example Widgets Inc",
+  :default =>  "Example Widgets Inc",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/cert/email",
+  :display_name => "OpenVPN Cert Email",
+  :description => "OpenVPN Email to use when generating the server and client certificates. Example: root@example.com",
+  :default =>  "root@example.com",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/cert/cn",
+  :display_name => "OpenVPN Cert Common Name",
+  :description => "OpenVPN Common Name to use when generating the server and client certificates. Example: openvpn-server.example.com",
+  :default =>  "openvpn-server.example.com",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/cert/ou",
+  :display_name => "OpenVPN Cert Organizational Unit",
+  :description => "OpenVPN Organizational Unit to use when generating the server and client certificates. Example: IT",
+  :default =>  "IT",
   :required => "optional",
   :recipes => [ "openvpn::server" ]
 
