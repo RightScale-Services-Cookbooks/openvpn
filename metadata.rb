@@ -43,7 +43,6 @@ attribute "openvpn/client/count",
 attribute "openvpn/client/names",
   :display_name => "OpenVPN Client Name(s)",
   :description => "One or a comma-separated list of client names to create openvpn certs for. Ex: john_doe,jane_doe",
-  :default => "john_doe,jane_doe",
   :required => "required",
   :recipes => [ "openvpn::manage_named_client_certs" ]
   
