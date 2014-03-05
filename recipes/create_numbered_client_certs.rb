@@ -1,3 +1,5 @@
+rightscale_marker :begin
+
 log node[:openvpn][:client][:count].to_i
 log node[:openvpn][:client][:host_prefix]
 
@@ -34,3 +36,5 @@ bash "reload openvpn" do
     service openvpn reload
   EOF
 end
+
+rightscale_marker :end
