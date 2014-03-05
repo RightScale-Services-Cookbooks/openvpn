@@ -16,7 +16,7 @@ recipe "openvpn::client", "Installs OpenVPN client software, and downloads clien
 
 # Client cert recipes
 recipe "openvpn::create_numbered_client_certs", "Creates 'openvpn/client/count' numbered client certs starting from 'openvpn/client/count_start'"
-recipe "openvpn::create_named_client_certs", "Creates named client certs in the easy-rsa/keys/ folder"
+recipe "openvpn::manage_named_client_certs", "Manage(create or revoke) client certificates. Input 'openvpn/client/names' should contain all names to be allowed. To create a new client certificate, add the name to the list in the input. To revoke a client certificate, remove the name from the list. Then, run the recipe to sync."
 recipe "openvpn::lighttpd", "Installs lighthttpd for serving certs"
 
 # Backup and Restore recipes
@@ -45,7 +45,7 @@ attribute "openvpn/client/names",
   :description => "One or a comma-separated list of client names to create openvpn certs for. Ex: john_doe,jane_doe",
   :default => "john_doe,jane_doe",
   :required => "optional",
-  :recipes => [ "openvpn::create_named_client_certs" ]
+  :recipes => [ "openvpn::manage_named_client_certs" ]
   
 attribute "openvpn/client/cert_name",
   :display_name => "OpenVPN Client Cert Name",
