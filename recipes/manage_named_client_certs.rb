@@ -7,7 +7,7 @@ end
 log "*** Setting up client certificates in /etc/openvpn/easy-rsa/keys/"
 log "*** Client names: #{node[:openvpn][:client][:names]}"
 
-existing_clients=`grep '^V' /etc/openvpn/easy-rsa/keys/index.txt | sed -r 's/.*name=([^/]+).*/\\1/g' | grep -v '^server$'`.split(/\s*\n\s*/)
+existing_clients=`grep '^V' /etc/openvpn/easy-rsa/keys/index.txt | sed -r 's/.*name=([^/]+).*/\\1/g' | grep -v '^server$' || true`.split(/\s*\n\s*/)
 
 node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
   name="named_client-#{i}"
