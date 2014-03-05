@@ -16,7 +16,7 @@ recipe "openvpn::client", "Installs OpenVPN client software, and downloads clien
 
 # Client cert recipes
 recipe "openvpn::create_numbered_client_certs", "Creates 'openvpn/client/count' numbered client certs starting from 'openvpn/client/count_start'"
-recipe "openvpn::manage_named_client_certs", "Manage(create or revoke) certificates. Input 'openvpn/client/names' should contain all names to be allowed. To create a new certificate, add the name to the list in the input. To revoke a client, remove the name from the list. Then, run the recipe to sync."
+recipe "openvpn::manage_named_client_certs", "Manage(create or revoke) certificates. The names input should contain all names to be allowed. To create a new certificate, add the name to the list in the input. To revoke a client, remove the name from the list. Then, run the recipe to sync."
 recipe "openvpn::lighttpd", "Installs lighthttpd for serving certs"
 
 # Backup and Restore recipes
