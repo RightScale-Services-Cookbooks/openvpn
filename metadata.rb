@@ -11,7 +11,7 @@ depends "sys_firewall"
 
 # Core recipes
 recipe "openvpn::default", "Install OpenVPN base software, needed for both client and server"
-recipe "openvpn::server", "Install OpenVPN server software and generates certificates(keys) if not restored"
+recipe "openvpn::server", "Install OpenVPN server software and generate certificates(keys) if not restored from ROS"
 recipe "openvpn::client", "Installs OpenVPN client software, and downloads client certs"
 
 # Client cert recipes
