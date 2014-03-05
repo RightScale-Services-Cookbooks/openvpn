@@ -1,7 +1,7 @@
 rightscale_marker :begin
 
 if ("#{node[:openvpn][:client][:names]}" == "")
-  raise "*** Input openvpn/client/names is undefined, aborting"
+  node[:openvpn][:client][:names]="";
 end
 
 log "*** Setting up client certificates in /etc/openvpn/easy-rsa/keys/"
