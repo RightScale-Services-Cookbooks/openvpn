@@ -7,14 +7,15 @@ end
 log "*** Setting up client certificates in /etc/openvpn/easy-rsa/keys/"
 log "*** Client names: #{node[:openvpn][:client][:names]}"
 
+existing_clients=`grep '^V' /etc/openvpn/easy-rsa/keys/index.txt | sed -r 's/.*name=([^/]+).*/\\1/g' | grep -v '^server$'`.split(/\s*\n\s*/)
+
 node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
   name="named_client-#{i}"
-
   if (existing_clients.include? name)
-    print "*** Client #{name} already exists, skipping it"
+    log "*** Client #{name} already exists, skipping..."
     existing_clients.delete(name)
   else
-    log "*** Client #{name} doesn't exist, adding it"
+    log "*** Client #{name} doesn't exist, adding..."
     bash "create client" do
       cwd "/etc/openvpn/easy-rsa"
       code <<-EOF
@@ -39,7 +40,7 @@ node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
 end
 
 existing_clients.each do  |name|
-  log "*** Client #{name} already exists, but no longer required, revoking it"
+  log "*** Client #{name} already exists, but no longer required, revoking..."
   bash "create client" do
     cwd "/etc/openvpn/easy-rsa"
     code <<-EOF
