@@ -1,29 +1,52 @@
+rightscale_marker :begin
+
 if ("#{node[:openvpn][:client][:names]}" == "")
   raise "*** Input openvpn/client/names is undefined, aborting"
 end
 
+log "*** Setting up client certificates in /etc/openvpn/easy-rsa/keys/"
+log "*** Client names: #{node[:openvpn][:client][:names]}"
+
 node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
   name="named_client-#{i}"
 
-  log "*** Creating client cert /etc/openvpn/easy-rsa/keys/#{name}.*"
+  if (existing_clients.include? name)
+    print "*** Client #{name} already exists, skipping it"
+    existing_clients.delete(name)
+  else
+    log "*** Client #{name} doesn't exist, adding it"
+    bash "create client" do
+      cwd "/etc/openvpn/easy-rsa"
+      code <<-EOF
+        echo "*** Sourcing /etc/openvpn/easy-rsa/vars"
+        source ./vars > /dev/null
+        export KEY_CN="#{name}"
+        export EASY_RSA="${EASY_RSA:-.}"
+        export KEY_NAME="#{name}"
+
+        echo "*** Running $EASY_RSA/pkitool"
+        "$EASY_RSA/pkitool" --batch "#{name}"
+
+        if [ -d /var/www/lighttpd/secure ] ; then
+          echo "*** Creating /var/www/lighttpd/secure/#{name}.tar"
+          tar -cf /var/www/lighttpd/secure/#{name}.tar keys/#{name}.crt keys/#{name}.key keys/ca.crt
+        else
+          echo "*** /var/www/lighttpd/secure/ is missing, skipping the tarball creation"
+        fi
+      EOF
+    end
+  end
+end
+
+existing_clients.each do  |name|
+  log "*** Client #{name} already exists, but no longer required, revoking it"
   bash "create client" do
     cwd "/etc/openvpn/easy-rsa"
     code <<-EOF
-      echo "*** Sourcing /etc/openvpn/easy-rsa/vars" 
+      echo "*** Sourcing /etc/openvpn/easy-rsa/vars"
       source ./vars > /dev/null
-      export KEY_CN=#{name}
-      export EASY_RSA="${EASY_RSA:-.}"
-      export KEY_NAME="#{name}"
-
-      echo "*** Running $EASY_RSA/pkitool"
-      "$EASY_RSA/pkitool" --batch #{name}
-
-      if [ -d /var/www/lighttpd/secure ] ; then
-        echo "*** Creating /var/www/lighttpd/secure/#{name}.tar" 
-        tar -cf /var/www/lighttpd/secure/#{name}.tar keys/#{name}.crt keys/#{name}.key keys/ca.crt
-      else
-        echo "*** /var/www/lighttpd/secure/ is missing, skipping the tarball creation"
-      fi
+      echo "*** Running $EASY_RSA/revoke-full "
+      ./revoke-full "#{name}" | grep "certificate revoked"
     EOF
   end
 end
@@ -35,3 +58,5 @@ bash "reload openvpn" do
     service openvpn reload
   EOF
 end
+
+rightscale_marker :end
