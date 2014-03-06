@@ -23,16 +23,19 @@ package "openvpn" do
   action :install
 end
 
-#Ubuntu easy-rsa
-link "/usr/share/easy-rsa" do
-  to "/usr/share/doc/openvpn/examples/easy-rsa"
-end if (File.exists?("/usr/share/doc/openvpn/examples/easy-rsa") && !File.exists?("/usr/share/easy-rsa"))
-
-# CentOS easy-rsa
-# This will install easy-rsa under /usr/share/easy-rsa
-package "easy-rsa" do
-  action :install
-end unless File.exists?("/usr/share/easy-rsa")
+case node[:platform]
+when 'centos', 'redhat'
+  log "*** Installing easy-rsa and lzo"
+  package "easy-rsa"
+  package "lzo"
+when 'ubuntu', 'debian'
+  log "*** easy-rsa is already installed, linking under /usr/share/easy-rsa"
+  link "/usr/share/easy-rsa" do
+    to "/usr/share/doc/openvpn/examples/easy-rsa"
+  end
+else
+  raise "*** Unsupported platform '#{node[:platform]}'"
+end
 
 chef_gem "netaddr" do
   action :install
