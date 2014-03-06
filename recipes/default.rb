@@ -23,13 +23,13 @@ package "openvpn" do
   action :install
 end
 
-package "lzo" do
-  action :install
-end
+#package "lzo" do
+#  action :install
+#end
 
-package "easy-rsa" do
-  action :install
-end
+#package "easy-rsa" do
+#  action :install
+#end
 
 chef_gem "netaddr" do
   action :install
