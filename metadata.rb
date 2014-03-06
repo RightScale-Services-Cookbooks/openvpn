@@ -87,6 +87,21 @@ attribute "openvpn/server/subnet_mask",
   :required => "optional",
   :recipes => [ "openvpn::server" ]
   
+attribute "openvpn/server/port",
+  :display_name => "OpenVPN Server Port",
+  :description => "OpenVPN Server listening port. Example: 1194",
+  :default => "1194",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+  
+attribute "openvpn/server/proto",
+  :display_name => "OpenVPN Server Proto",
+  :description => "OpenVPN Server protocol. Example: UDP",
+  :default => "UDP",
+  :choice => [ "UDP", "TCP" ],
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
+  
 #openvpn cert inputs  
 attribute "openvpn/cert/country",
   :display_name => "OpenVPN Cert Country",
