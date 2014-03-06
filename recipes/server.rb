@@ -89,6 +89,8 @@ template "/etc/openvpn/server.conf" do
   group "root"
   mode "0644"
   variables(
+    :port => node[:openvpn][:server][:port],
+    :proto => node[:openvpn][:server][:proto].downcase,
     :key_dir => node[:openvpn][:key_dir],
     :log_dir => node[:openvpn][:log_dir],
     :cipher => node[:openvpn][:cipher],
