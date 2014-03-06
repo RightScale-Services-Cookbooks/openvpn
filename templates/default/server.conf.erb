@@ -4,7 +4,7 @@ dev tun
 ca <%= @key_dir %>/ca.crt
 cert <%= @key_dir %>/server.crt
 key <%= @key_dir %>/server.key
-dh <%= @key_dir %>/dh1024.pem
+dh <%= @key_dir %>/dh2048.pem
 server <%= @network_prefix %> <%= @subnet_mask %>
 ifconfig-pool-persist ipp.txt
 
