@@ -100,7 +100,7 @@ attribute "openvpn/server/proto",
   :default => "UDP",
   :choice => [ "UDP", "TCP" ],
   :required => "optional",
-  :recipes => [ "openvpn::server" ]
+  :recipes => [ "openvpn::client", "openvpn::server" ]
   
 #openvpn cert inputs  
 attribute "openvpn/cert/country",
