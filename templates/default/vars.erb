@@ -45,12 +45,8 @@ echo NOTE: If you run ./clean-all, I will be doing a rm -rf on $KEY_DIR
 export PKCS11_MODULE_PATH="dummy"
 export PKCS11_PIN="dummy"
 
-# Increase this to 2048 if you
-# are paranoid.  This will slow
-# down TLS negotiation performance
-# as well as the one-time DH parms
-# generation process.
-export KEY_SIZE=1024
+# 2048 bit key to be on the safe side
+export KEY_SIZE=2048
 
 # In how many days should the root CA key expire?
 export CA_EXPIRE=3650
