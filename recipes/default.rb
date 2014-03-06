@@ -23,20 +23,16 @@ package "openvpn" do
   action :install
 end
 
-#package "lzo" do
-#  action :install
-#end
+#Ubuntu easy-rsa
+link "/usr/share/easy-rsa" do
+  to "/usr/share/doc/openvpn/examples/easy-rsa"
+end if (File.exists?("/usr/share/doc/openvpn/examples/easy-rsa") && !File.exists?("/usr/share/easy-rsa"))
 
-if File.exists?("/usr/share/doc/openvpn/examples/easy-rsa")
-  link "/usr/share/easy-rsa" do
-    to "/usr/share/doc/openvpn/examples/easy-rsa"
-  end
-else
-  # This will install easy-rsa under /usr/share/easy-rsa
-  package "easy-rsa" do
-    action :install
-  end
-end
+# CentOS easy-rsa
+# This will install easy-rsa under /usr/share/easy-rsa
+package "easy-rsa" do
+  action :install
+end unless File.exists?("/usr/share/easy-rsa")
 
 chef_gem "netaddr" do
   action :install
