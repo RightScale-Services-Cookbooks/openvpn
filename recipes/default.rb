@@ -27,8 +27,10 @@ end
 #  action :install
 #end
 
-package "easy-rsa" do
-  action :install
+if !File.directory?("/usr/share/doc/openvpn/examples/easy-rsa/")
+  package "easy-rsa" do
+    action :install
+  end
 end
 
 chef_gem "netaddr" do
