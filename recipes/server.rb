@@ -103,8 +103,8 @@ template "/etc/openvpn/server.conf" do
   action :create
 end
 
-sys_firewall "1194" do
-  protocol "udp"
+sys_firewall node[:openvpn][:server][:port] do
+  protocol node[:openvpn][:server][:proto].downcase
   action :update
 end
 
