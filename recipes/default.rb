@@ -16,6 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+rightscale_marker :begin
+
 package "openvpn" do
   action :install
 end
@@ -48,3 +51,4 @@ directory node[:openvpn][:key_dir] do
   action :create
 end
    
+rightscale_marker :end 
