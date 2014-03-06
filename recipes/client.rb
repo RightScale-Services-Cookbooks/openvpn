@@ -18,7 +18,9 @@ template "/etc/openvpn/client.conf" do
   owner "root"
   group "root"
   mode "0644"
-  variables( :key_dir => node[:openvpn][:key_dir],
+  variables( :port => node[:openvpn][:server][:port],
+             :proto => node[:openvpn][:server][:proto].downcase,
+             :key_dir => node[:openvpn][:key_dir],
              :log_dir => node[:openvpn][:log_dir],
              :cipher => node[:openvpn][:cipher],
              :network_prefix => node[:openvpn][:server][:network_prefix],
@@ -34,24 +36,11 @@ service "openvpn" do
   action :start
 end
 
-sys_firewall "1194" do
-  protocol "both"
+sys_firewall node[:openvpn][:server][:port] do
+  protocol node[:openvpn][:server][:proto].downcase
   action :update
 end
 
-#ruby_block "set-ip-tag" do
-#  block do
-#    require 'rubygems'
-#    require 'json'
-#    require 'ohai'
-#
-#    system = Ohai::System.new
-#    system.all_plugins
-#    node1=JSON.parse(system.to_json)
-#    puts node1
-#    Chef::ShellOut.new("/usr/bin/rs_tag --add openvpn::ip=#{node1["network"]["interfaces"]["tun0"]["addresses"].first.first}").run_command
-#  end
-#end
 right_link_tag "openvpn:client_number=#{node[:openvpn][:client][:host_number]}" do
   action :publish
 end
