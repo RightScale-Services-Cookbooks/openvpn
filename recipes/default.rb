@@ -27,7 +27,10 @@ end
 #  action :install
 #end
 
-if !File.directory?("/usr/share/doc/openvpn/examples/easy-rsa/")
+if File.directory?("/usr/share/doc/openvpn/examples/easy-rsa/")
+  execute "cp -R /usr/share/doc/openvpn/examples/easy-rsa /etc/openvpn/easy-rsa"
+else
+  # This will install easy-rsa under /etc/openvpn/easy-rsa
   package "easy-rsa" do
     action :install
   end
