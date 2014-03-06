@@ -1,7 +1,7 @@
 client
 dev tun
-proto udp
-remote <%= @server %> 1194
+proto <%= @proto %>
+remote <%= @server %> <%= @port %>
 # Choose a random host from the remote
 # list for load-balancing.  Otherwise
 # try hosts in the order specified.
