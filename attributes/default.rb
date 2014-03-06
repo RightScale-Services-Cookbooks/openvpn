@@ -1,6 +1,9 @@
 default[:openvpn][:key_dir]="/etc/openvpn/easy-rsa/keys"
 default[:openvpn][:log_dir]="/var/log/openvpn"
 default[:openvpn][:cipher]="BF-CBC"
+default[:openvpn][:server][:port]="1194"
+default[:openvpn][:server][:proto]="udp"
+
 #cert info
 default[:openvpn][:cert][:country]="US"
 default[:openvpn][:cert][:province]="CA"
