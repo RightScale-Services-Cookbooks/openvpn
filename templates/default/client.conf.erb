@@ -11,8 +11,8 @@ nobind
 persist-key
 persist-tun
 ca <%= @key_dir %>/ca.crt
-cert <%= @key_dir %>/<%= @hostname %>.crt
-key <%= @key_dir %>/<%= @hostname %>.key
+cert <%= @key_dir %>/<%= @cert %>.crt
+key <%= @key_dir %>/<%= @cert %>.key
 # script in the easy-rsa folder will do this.
 ns-cert-type server
 
@@ -28,7 +28,7 @@ comp-lzo
 
 # Set log file verbosity.
 status <%= @log_dir %>/openvpn-status.log
-log         <%= @log_dir %>/openvpn.log
+log <%= @log_dir %>/openvpn.log
 verb 3
 
 # Silence repeating messages
