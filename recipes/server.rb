@@ -22,7 +22,7 @@ easy_rsa_dir="/etc/openvpn/easy-rsa/"
 execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 
 log "*** Patching whichopensslcnf if needed, making alnum optional"
-execute "sed -r 's/(\[\[:digit:\]\]\[\[:alnum:\]\])([^\?])/\1\?\2/' whichopensslcnf"
+execute "sed -i -r 's/(\\[\\[:digit:\\]\\]\\[\\[:alnum:\\]\\])([^\\?])/\\1\\?\\2/' #{easy_rsa_dir}whichopensslcnf"
 
 template "#{easy_rsa_dir}/vars" do
   source "vars.erb"
