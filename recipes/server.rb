@@ -61,6 +61,8 @@ if ("#{node[:openvpn][:certificates_action]}" == "Generate")
   bash "build keys" do
     cwd "#{easy_rsa_dir}"
     code <<-EOF
+      echo "*** Patching whichopensslcnf if needed, making alnum optional"
+      sed -r 's/(\[\[:digit:\]\]\[\[:alnum:\]\])([^\?])/\1\?\2/' whichopensslcnf
       echo "*** Generating the server keys"
       source ./vars
       ./clean-all
