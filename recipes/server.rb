@@ -21,6 +21,9 @@ end
 easy_rsa_dir="/etc/openvpn/easy-rsa/"
 execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 
+log "*** Patching whichopensslcnf if needed, making alnum optional"
+execute "sed -r 's/(\[\[:digit:\]\]\[\[:alnum:\]\])([^\?])/\1\?\2/' whichopensslcnf"
+
 template "#{easy_rsa_dir}/vars" do
   source "vars.erb"
   owner "root"
@@ -61,8 +64,6 @@ if ("#{node[:openvpn][:certificates_action]}" == "Generate")
   bash "build keys" do
     cwd "#{easy_rsa_dir}"
     code <<-EOF
-      echo "*** Patching whichopensslcnf if needed, making alnum optional"
-      sed -r 's/(\[\[:digit:\]\]\[\[:alnum:\]\])([^\?])/\1\?\2/' whichopensslcnf
       echo "*** Generating the server keys"
       source ./vars
       ./clean-all
