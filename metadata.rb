@@ -172,9 +172,9 @@ attribute "openvpn/cert/ou",
   :recipes => [ "openvpn::server" ]
 
 #openvpn client
-attribute "openvpn/server",
+attribute "openvpn/server/hostname",
   :display_name => "OpenVPN Server",
-  :description => "OpenVPN Server",
+  :description => "OpenVPN Server Hostname or IP. Example: openvpn-server.example.com",
   :required => "required",
   :recipes => [ "openvpn::client_url_certs", "openvpn::client_input_certs" ]
 
