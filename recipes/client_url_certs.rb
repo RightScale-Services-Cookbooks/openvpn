@@ -24,7 +24,7 @@ template "/etc/openvpn/client.conf" do
              :cipher => node[:openvpn][:cipher],
              :network_prefix => node[:openvpn][:server][:network_prefix],
              :subnet_mask => node[:openvpn][:server][:subnet_mask],
-             :server => node[:openvpn][:server],
+             :server => node[:openvpn][:server][:hostname],
              :cert => node[:openvpn][:client][:cert_name]
             )
   action :create
