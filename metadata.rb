@@ -177,7 +177,13 @@ attribute "openvpn/server/c2c",
   :default => "false",
   :choice => [ "false", "true" ],
   :required => "optional",
-  :recipes => [ "openvpn::server" ]  
+  :recipes => [ "openvpn::server" ]
+
+attribute "openvpn/server/additional",
+  :display_name => "OpenVPN Additional Configs",
+  :description => "Use this input to pass one or multiple newline-separated config items to the OpenVPN server.conf. Example: push \"redirect-gateway def1 bypass-dhcp\"",
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]
 
 #openvpn client
 attribute "openvpn/server/hostname",
