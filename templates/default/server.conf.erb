@@ -18,7 +18,11 @@ crl-verify /etc/openvpn/easy-rsa/keys/crl.pem
 ;push "dhcp-option DNS 208.67.222.222"
 ;push "dhcp-option DNS 208.67.220.220"
 #
+
+<% if @c2c == "true" %>       
 client-to-client
+<% end %>
+
 keepalive 10 120
 # Select a cryptographic cipher.
 # This config item must be copied to
