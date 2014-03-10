@@ -17,6 +17,8 @@ file "#{easy_rsa_dir}keys/client.key" do
   mode 00600
 end
 
+log "*** Creating client.conf for remote openvpn server(#{node[:openvpn][:server]}) over #{node[:openvpn][:server][:proto]}/#{node[:openvpn][:server][:port]}"
+
 template "/etc/openvpn/client.conf" do
   source "client.conf.erb"
   owner "root"
@@ -29,7 +31,6 @@ template "/etc/openvpn/client.conf" do
              :cipher => node[:openvpn][:cipher],
              :network_prefix => node[:openvpn][:server][:network_prefix],
              :subnet_mask => node[:openvpn][:server][:subnet_mask],
-             :client_count => node[:openvpn][:client][:count],
              :server => node[:openvpn][:server],
              :cert => "client"
             )
