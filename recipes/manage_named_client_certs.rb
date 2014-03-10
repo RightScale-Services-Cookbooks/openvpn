@@ -21,6 +21,7 @@ node[:openvpn][:client][:names].split(/\s*,\s*/).each do |i|
       code <<-EOF
         echo "*** Sourcing /etc/openvpn/easy-rsa/vars"
         source ./vars > /dev/null
+        export KEY_CN="#{name}"
         export EASY_RSA="${EASY_RSA:-.}"
         export KEY_NAME="#{name}"
 
