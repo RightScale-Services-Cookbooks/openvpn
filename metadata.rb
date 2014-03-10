@@ -12,7 +12,8 @@ depends "sys_firewall"
 # Core recipes
 recipe "openvpn::default", "Install OpenVPN base software, needed for both client and server"
 recipe "openvpn::server", "Install OpenVPN server software and generate certificates(keys) if not restored from ROS"
-recipe "openvpn::client", "Installs OpenVPN client software, and downloads client certs"
+recipe "openvpn::client_url_certs", "Installs OpenVPN client software, and downloads client certs"
+recipe "openvpn::client_input_certs", "Installs OpenVPN client software, and deploys client certs using inputs"
 
 # Client cert recipes
 recipe "openvpn::create_numbered_client_certs", "Creates 'openvpn/client/count' numbered client certs starting from 'openvpn/client/count_start'"
@@ -92,7 +93,7 @@ attribute "openvpn/server/port",
   :description => "OpenVPN Server listening port. Example: 1194",
   :default => "1194",
   :required => "optional",
-  :recipes => [ "openvpn::server" ]
+  :recipes => [ "openvpn::server", "openvpn::client_url_certs", "openvpn::client_input_certs" ]
   
 attribute "openvpn/server/proto",
   :display_name => "OpenVPN Server Proto",
@@ -100,8 +101,26 @@ attribute "openvpn/server/proto",
   :default => "UDP",
   :choice => [ "UDP", "TCP" ],
   :required => "optional",
-  :recipes => [ "openvpn::client", "openvpn::server" ]
+  :recipes => [ "openvpn::server", "openvpn::client_url_certs", "openvpn::client_input_certs" ]
+
+attribute "openvpn/client/ca_crt",
+  :display_name => "OpenVPN Client CA Cert",
+  :description => "OpenVPN value for the keys/ca.crt file. Same as the value used by the OpenVPN server",
+  :required => "required",
+  :recipes => [ "openvpn::client_input_certs" ]
+
+attribute "openvpn/client/client_crt",
+  :display_name => "OpenVPN Client Certificate",
+  :description => "OpenVPN value for the keys/client.crt file. This must be generated on the server for each client",
+  :required => "required",
+  :recipes => [ "openvpn::client_input_certs" ]
   
+attribute "openvpn/client/client_key",
+  :display_name => "OpenVPN Client Key",
+  :description => "OpenVPN value for the keys/client.key file. This must be generated on the server for each client",
+  :required => "required",
+  :recipes => [ "openvpn::client_input_certs" ]
+
 #openvpn cert inputs  
 attribute "openvpn/cert/country",
   :display_name => "OpenVPN Cert Country",
@@ -157,19 +176,19 @@ attribute "openvpn/server",
   :display_name => "OpenVPN Server",
   :description => "OpenVPN Server",
   :required => "required",
-  :recipes => [ "openvpn::client" ]
+  :recipes => [ "openvpn::client_url_certs", "openvpn::client_input_certs" ]
 
 attribute "openvpn/client/key_base_url",
   :display_name => "OpenVPN Client Package Base URL",
   :description => "OpenVPN Client Package Base URL",
   :required => "required",
-  :recipes => [ "openvpn::client" ]
+  :recipes => [ "openvpn::client_url_certs" ]
 
 attribute "openvpn/client/host_number",
   :display_name => "OpenVPN Client Host Number",
   :description => "OpenVPN Client Host Number",
   :required => "required",
-  :recipes => [ "openvpn::client" ]
+  :recipes => [ "openvpn::client_url_certs" ]
   
 # == OpenVPN ROS Backup/Restore attributes
 
