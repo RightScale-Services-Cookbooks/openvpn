@@ -170,6 +170,14 @@ attribute "openvpn/cert/ou",
   :default =>  "IT",
   :required => "optional",
   :recipes => [ "openvpn::server" ]
+  
+attribute "openvpn/server/c2c",
+  :display_name => "OpenVPN Client To Client",
+  :description => "Set to true if you would like connecting clients to be able to reach each other over the VPN. By default, clients will only be able to reach the server",
+  :default => "false",
+  :choice => [ "false", "true" ],
+  :required => "optional",
+  :recipes => [ "openvpn::server" ]  
 
 #openvpn client
 attribute "openvpn/server/hostname",
