@@ -56,5 +56,11 @@ directory node[:openvpn][:key_dir] do
   recursive true
   action :create
 end
+
+easy_rsa_dir="/etc/openvpn/easy-rsa/"
+execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
+
+log "*** Patching whichopensslcnf if needed, making alnum optional"
+execute "sed -i -r 's/(\\[\\[:digit:\\]\\]\\[\\[:alnum:\\]\\])([^\\?])/\\1\\?\\2/' #{easy_rsa_dir}whichopensslcnf"
    
 rightscale_marker :end 
