@@ -11,15 +11,15 @@ ifconfig-pool-persist ipp.txt
 # Add support for revoking OpenVPN certificates
 crl-verify /etc/openvpn/easy-rsa/keys/crl.pem
 
-#
+# Make the VPN server the default gateway
 ;push "redirect-gateway def1 bypass-dhcp"
 
 # DNS servers provided by opendns.com.
 ;push "dhcp-option DNS 208.67.222.222"
 ;push "dhcp-option DNS 208.67.220.220"
-#
 
-<% if @c2c == "true" %>       
+<% if @c2c == "true" %>
+# For connecting clients to be able to reach each other over the VPN
 client-to-client
 <% end %>
 
@@ -62,3 +62,6 @@ verb 3
 push "route <%= route %>"
 <% end %>
 <% end %>
+
+# Additional config items
+<%= @additional %>
