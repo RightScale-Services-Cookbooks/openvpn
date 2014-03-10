@@ -83,6 +83,7 @@ template "/etc/openvpn/server.conf" do
   variables(
     :port => node[:openvpn][:server][:port],
     :proto => node[:openvpn][:server][:proto].downcase,
+    :c2c => node[:openvpn][:key_dir][:c2c],
     :key_dir => node[:openvpn][:key_dir],
     :log_dir => node[:openvpn][:log_dir],
     :cipher => node[:openvpn][:cipher],
