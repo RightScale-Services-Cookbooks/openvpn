@@ -1,7 +1,6 @@
 rightscale_marker :begin
 
 easy_rsa_dir="/etc/openvpn/easy-rsa/"
-execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 
 remote_file "#{easy_rsa_dir}/client.tar" do
   source "#{node[:openvpn][:client][:key_base_url]}/#{node[:openvpn][:client][:cert_name]}.tar"
