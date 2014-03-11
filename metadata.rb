@@ -25,6 +25,8 @@ recipe "openvpn::backup_certificates", "Creates an OpenVPN certificates tarball 
 recipe "openvpn::restore_certificates", "Restores the latest backup certificates tarball from ROS to the easy-rsa/keys OpenVPN folder"
 recipe "openvpn::backup_schedule_enable", "Enables openvpn::backup_certificates to be run daily."
 recipe "openvpn::backup_schedule_disable", "Disables openvpn::backup_certificates from being run daily."
+recipe "openvpn::restart", "Restarts the openvpn service."
+recipe "openvpn::reload", "Reloads the openvpn service."
 
 # OpenVPN attributes
 attribute "openvpn/client/count_start",
