@@ -70,7 +70,7 @@ attribute "openvpn/region",
   :default => "default",
   :recipes => [ "openvpn::server" ]
 
-attribute "openvpn/routes",
+attribute "openvpn/server/routes",
   :display_name => "OpenVPN Routes",
   :description => "OpenVPN Routes to be pushed to the client config. Use a comma-separated list of IP NETMASK pairs. For example: 10.0.0.0 255.0.0.0,192.168.40.0 255.255.255.0",
   :required => "optional",
