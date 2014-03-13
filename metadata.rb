@@ -53,7 +53,7 @@ attribute "openvpn/client/cert_name",
   :display_name => "OpenVPN Client Cert Name",
   :description => "The OpenVPN Client Certificate name as it is found in the easy-rsa/keys folder. For example: named_client-john_doe",
   :required => "required",
-  :recipes => [ "openvpn::client_input_certs" ]
+  :recipes => [ "openvpn::client_url_certs" ]
 
 #openvpn server
 attribute "openvpn/server/max_clients",
