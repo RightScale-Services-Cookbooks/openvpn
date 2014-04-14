@@ -20,8 +20,19 @@
 rightscale_marker :begin
 
 # Make sure the latest openssl package is installed for the CVE-2014-0160 vulnerability
-package "openssl" do
-  action :upgrade
+log "*** Installing/Updating openssl"
+packs = ["openssl"]
+case node[:platform]
+  when "ubuntu", "debian"
+    packs = ["openssl", "libssl1.0.0"]
+  when "centos","fedora","suse","redhat"
+    packs = ["openssl"]
+  else
+    raise "*** Unrecognized distro #{node[:platform]}, exiting "
+end
+
+packs.each do |p|
+  package p
 end
 
 package "openvpn" do
