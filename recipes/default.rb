@@ -19,6 +19,11 @@
 
 rightscale_marker :begin
 
+# Make sure the latest openssl package is installed for the CVE-2014-0160 vulnerability
+package "openssl" do
+  action :upgrade
+end
+
 package "openvpn" do
   action :install
 end
