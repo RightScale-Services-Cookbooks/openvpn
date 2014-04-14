@@ -32,7 +32,9 @@ case node[:platform]
 end
 
 packs.each do |p|
-  package p
+  package p do
+    action :upgrade
+  end
 end
 
 package "openvpn" do
