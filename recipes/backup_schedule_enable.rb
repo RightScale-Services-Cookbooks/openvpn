@@ -1,6 +1,6 @@
 rightscale_marker :begin
 
-bash "Installing apc" do
+bash "Creating /etc/cron.daily/vpn_backup" do
   flags "-ex"
   user "root"
   cwd "/tmp"
