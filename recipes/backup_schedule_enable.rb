@@ -7,7 +7,7 @@ bash "Creating /etc/cron.daily/vpn_backup" do
   code <<-EOH
 cat << EOF > /etc/cron.daily/vpn_backup
 #!/bin/sh
-rs_run_recipe --name 'openvpn::backup_certificates' 2>&1 >> /var/log/rs_backup.log
+rs_run_recipe --policy 'openvpn::backup_certificates' --name 'openvpn::backup_certificates' 2>&1 >> /var/log/rs_backup.log
 exit 0
 EOF
 
