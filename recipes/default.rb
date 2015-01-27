@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-rightscale_marker :begin
+marker "openvpn default start"
 
 # Make sure the latest openssl package is installed for the CVE-2014-0160 vulnerability
 log "*** Installing/Updating openssl"
@@ -81,4 +81,4 @@ execute "cp -R /usr/share/easy-rsa/2.0/* #{easy_rsa_dir}"
 log "*** Patching whichopensslcnf if needed, making alnum optional"
 execute "sed -i -r 's/(\\[\\[:digit:\\]\\]\\[\\[:alnum:\\]\\])([^\\?])/\\1\\?\\2/' #{easy_rsa_dir}whichopensslcnf"
    
-rightscale_marker :end 
+marker "openvpn default end" 

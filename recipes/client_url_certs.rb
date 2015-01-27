@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn client_url_certs start"
 
 easy_rsa_dir="/etc/openvpn/easy-rsa/"
 
@@ -34,12 +34,7 @@ service "openvpn" do
   action :start
 end
 
-sys_firewall node[:openvpn][:server][:port] do
-  protocol node[:openvpn][:server][:proto].downcase
-  action :update
-end
-
 right_link_tag "openvpn:client_number=#{node[:openvpn][:client][:host_number]}" do
   action :publish
 end
-rightscale_marker :end             
+marker "openvpn client_url_certs end"             

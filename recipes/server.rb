@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn server start"
 
 require 'netaddr'
 subnet=NetAddr::CIDR.create("#{node[:openvpn][:server][:network_prefix]} #{node[:openvpn][:server][:subnet_mask]}").netmask.split('/').last
@@ -97,11 +97,6 @@ template "/etc/openvpn/server.conf" do
   action :create
 end
 
-sys_firewall node[:openvpn][:server][:port] do
-  protocol node[:openvpn][:server][:proto].downcase
-  action :update
-end
-
 right_link_tag "provides:openvpn=server" do
   action :publish
 end
@@ -145,4 +140,4 @@ service "openvpn" do
   notifies :reload, "ohai[reload]"
 end
 
-rightscale_marker :end
+marker "openvpn server end"

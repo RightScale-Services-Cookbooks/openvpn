@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn backup_schedule_enable start"
 
 bash "Creating /etc/cron.daily/vpn_backup" do
   flags "-ex"
@@ -15,4 +15,4 @@ chmod +x /etc/cron.daily/vpn_backup
   EOH
 end
 
-rightscale_marker :end
+marker "openvpn backup_schedule_enable end"

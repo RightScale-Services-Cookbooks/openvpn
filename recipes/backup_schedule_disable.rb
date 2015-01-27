@@ -1,6 +1,6 @@
-rightscale_marker :begin
+marker "openvpn backup_schedule_disable start"
 
 log "*** Removing /etc/cron.daily/vpn_backup if exists"
 system('rm -rf /etc/cron.daily/vpn_backup')
 
-rightscale_marker :end
+marker "openvpn backup_schedule_disable end"

@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn restore_certificates start"
 
 log "*** In openvpn::restore_certificates"
 
@@ -38,7 +38,7 @@ else
       {}
     else
       {'STORAGE_OPTIONS' => JSON.dump({
-        :endpoint => node[:openvpn][:backup][:storage_account_endpoint],
+        "openvpn restore_certificates end"point => node[:openvpn][:backup][:storage_account_endpoint],
         :cloud => node[:openvpn][:backup][:storage_account_provider].to_sym
       })}
     end
@@ -66,4 +66,4 @@ else
   end
 end 
 
-rightscale_marker :end
+marker "openvpn restore_certificates end"

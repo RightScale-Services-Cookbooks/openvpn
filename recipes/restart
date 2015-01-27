@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn restart start"
 
 log "*** Restarting the openvpn service"
 
@@ -6,4 +6,4 @@ service "openvpn" do
   action :restart
 end
 
-rightscale_marker :end
+marker "openvpn restart end"

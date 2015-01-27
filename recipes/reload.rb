@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn reload start"
 
 log "*** Reloading the openvpn service"
 
@@ -9,4 +9,4 @@ bash "reload openvpn" do
   EOF
 end
 
-rightscale_marker :end
+marker "openvpn reload end"

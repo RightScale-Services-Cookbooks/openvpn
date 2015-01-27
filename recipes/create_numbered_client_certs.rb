@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn create_numbered_client_certs start"
 
 log node[:openvpn][:client][:count].to_i
 log node[:openvpn][:client][:host_prefix]
@@ -37,4 +37,4 @@ bash "reload openvpn" do
   EOF
 end
 
-rightscale_marker :end
+marker "openvpn create_numbered_client_certs end"

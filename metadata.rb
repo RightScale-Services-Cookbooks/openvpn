@@ -4,10 +4,9 @@ maintainer_email 'support@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures openvpn'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.6'
+version          '2.1.7'
 
-depends "rightscale"
-depends "sys_firewall"
+depends "marker"
 
 # Core recipes
 recipe "openvpn::default", "Install OpenVPN base software, needed for both client and server"

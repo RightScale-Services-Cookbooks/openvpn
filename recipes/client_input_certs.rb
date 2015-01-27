@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn client_input_certs start"
 
 easy_rsa_dir="/etc/openvpn/easy-rsa/"
 
@@ -37,13 +37,8 @@ template "/etc/openvpn/client.conf" do
   action :create
 end
 
-sys_firewall node[:openvpn][:server][:port] do
-  protocol node[:openvpn][:server][:proto].downcase
-  action :update
-end
-
 service "openvpn" do
   action :start
 end
 
-rightscale_marker :end           
+marker "openvpn client_input_certs end"           

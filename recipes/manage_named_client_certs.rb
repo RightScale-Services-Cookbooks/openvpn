@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn manage_named_client_certs start"
 
 if ("#{node[:openvpn][:client][:names]}" == "")
   node[:openvpn][:client][:names]="";
@@ -60,4 +60,4 @@ bash "reload openvpn" do
   EOF
 end
 
-rightscale_marker :end
+marker "openvpn manage_named_client_certs end"

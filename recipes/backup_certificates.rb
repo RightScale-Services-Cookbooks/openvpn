@@ -1,4 +1,4 @@
-rightscale_marker :begin
+marker "openvpn backup_certificates start"
 
 log "*** In openvpn::backup_certificates"
 
@@ -26,7 +26,7 @@ options =
     {}
   else
     {'STORAGE_OPTIONS' => JSON.dump({
-      :endpoint => node[:openvpn][:backup][:storage_account_endpoint],
+      "openvpn backup_certificates end"point => node[:openvpn][:backup][:storage_account_endpoint],
       :cloud => node[:openvpn][:backup][:storage_account_provider].to_sym
     })}
   end
@@ -55,4 +55,4 @@ file backupfilepath do
   action :delete
 end 
 
-rightscale_marker :end
+marker "openvpn backup_certificates end"
