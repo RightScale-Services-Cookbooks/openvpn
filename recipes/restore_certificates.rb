@@ -38,7 +38,7 @@ else
       {}
     else
       {'STORAGE_OPTIONS' => JSON.dump({
-        "openvpn restore_certificates end"point => node[:openvpn][:backup][:storage_account_endpoint],
+        :endpoint => node[:openvpn][:backup][:storage_account_endpoint],
         :cloud => node[:openvpn][:backup][:storage_account_provider].to_sym
       })}
     end
