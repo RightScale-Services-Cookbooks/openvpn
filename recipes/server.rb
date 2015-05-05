@@ -97,14 +97,6 @@ template "/etc/openvpn/server.conf" do
   action :create
 end
 
-right_link_tag "provides:openvpn=server" do
-  action :publish
-end
-
-right_link_tag "openvpn:region=#{node[:openvpn][:region]}" do
-  action :publish
-end
-
 bash "net.ipv4.ip_forward update" do
   flags "-ex"
   user "root"
@@ -129,10 +121,6 @@ end
 
 ohai "reload" do
   action :nothing
-end
-
-right_link_tag "openvpn:network=#{node[:openvpn][:server][:network_prefix]}/#{subnet}" do
-  action :publish
 end
 
 service "openvpn" do
